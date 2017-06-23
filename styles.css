@@ -44,3 +44,7 @@
 #keyboard-upper-container {
   display: none;
 }
+
+.highlight {
+  background-color: yellow;
+}
