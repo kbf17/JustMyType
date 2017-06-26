@@ -110,10 +110,11 @@ function wordsPerMinute(){
 
 function endGame(){
     var elapsed = new Date() - start;
- 
-    console.log(elapsed);
-    var speed = (numberOfWords / elapsed - 2 * numberOfMistakes);
-    var yes = confirm('Your speed is: ' + speed + "\nWould you like to try again?");
+    var minuteLapse = elapsed / 60000;
+    var minutesTyped = Math.round(minuteLapse);
+    console.log(minutesTyped);
+    var speed = (numberOfWords / minutesTyped - 2 * numberOfMistakes);
+    var yes = confirm('Your speed is: ' + speed + 'WPM' + "\nWould you like to try again?");
     if (yes == true){
         location.reload();
     } else {
