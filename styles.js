@@ -2,7 +2,6 @@ var keyStroke;
 var sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
     'Too ato too nOt enot one totA not anot tOO aNot',
     'oat itain oat tain nate eate tea anne inant nean',
-    'nate eate tea anne inant nean',
     'itant eate anot eat nato inate eat anot tain eat',
     'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 var i = -1;
@@ -57,7 +56,7 @@ $(document).ready(function(){
     });
 
     //display sentences
-    $('#sentence').html((sentences[0]));
+    $('#sentence').html((sentences[0].split('')));
 
     //move highlight box
     $('body').on('keypress', function(key){
@@ -66,13 +65,14 @@ $(document).ready(function(){
         }
     });
 
-    //
+    //the main game
     $('body').on('keypress', function(){
         i++;
         travelSentence();
     });
 });
 
+//game function
 function travelSentence () {
     numOfChar++;
     var sentChar = sentences[l].charAt(i);
@@ -90,7 +90,7 @@ function travelSentence () {
     else if (numOfChar >= sentences[l].length){
         l++;
         $('#yellow-block').css('margin-left', "-15px");
-        $('#sentence').html((sentences[l]));
+        $('#sentence').html((sentences[l]).split(''));
         $('#feedback').html('');
         numOfChar = 0;
         i = -1;
@@ -103,24 +103,19 @@ function travelSentence () {
     }
 };
 
-function wordsPerMinute(){
-    var stop = d.getMinutes();
-    var speed = (numberOfWords / (stop - start) - 2 * numberOfMistakes);
-};
-
 function endGame(){
     var elapsed = new Date() - start;
     var minuteLapse = elapsed / 60000;
     var minutesTyped = Math.round(minuteLapse);
     console.log(minutesTyped);
     var speed = (numberOfWords / minutesTyped - 2 * numberOfMistakes);
-    var yes = confirm('Your speed is: ' + speed + 'WPM' + "\nWould you like to try again?");
+    var yes = confirm('Your speed is: ' + speed + ' WPM.' + '\nYou made ' + numberOfMistakes + ' errors.' + '\nWould you like to try again?');
     if (yes == true){
         location.reload();
     } else {
         alert('Kay.');
     }
-}
+};
 
 
 //tyler examples
