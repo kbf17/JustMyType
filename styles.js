@@ -1,4 +1,18 @@
 var keyStroke;
+var sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
+    'Too ato too nOt enot one totA not anot tOO aNot',
+    'oat itain oat tain nate eate tea anne inant nean',
+    'nate eate tea anne inant nean',
+    'itant eate anot eat nato inate eat anot tain eat',
+    'nee ene ate ite tent tiet ent ine ene ete ene ate'];
+var i = -1;
+var l = 0;
+var sentLength = sentences[l].length;
+// var sentChar = sentences[l].charAt(i);
+var numOfChar = 0;
+var ok = $('<span />').attr({'class':'glyphicon glyphicon-ok', 'aria-hidden':'true' });
+var nope = $('<span />').attr({'class':'glyphicon glyphicon-remove', 'aria-hidden':'true' });
+var numberOfMistakes = 0;
 
 $(document).ready(function(){
     //changes between keyboards
@@ -15,14 +29,15 @@ $(document).ready(function(){
             $('#keyboard-upper-container').hide();
         }
     });
+
     //letter to text input
     $("body").keypress(function(which){
         keyStroke = String.fromCharCode(event.which);
-        console.log(keyStroke);
-        $('#target-letter').text(keyStroke);
-        var letter = event.charCode;
-        console.log(letter);
+        // console.log(keyStroke);
+        // var letter = event.charCode;
+        // console.log(letter); 
     });
+
     //highlights current button
     $('body').on('keypress', function(){
         $('span.key').each(function () {
@@ -51,30 +66,43 @@ $(document).ready(function(){
 
     //
     $('body').on('keypress', function(){
-            travelSentence();
-        
-    })
+        // var i = -1;
+        i++;
+        travelSentence();
+
+    });
+
+    
 });
 
 function travelSentence () {
-    i++;
-    var sentChar = sentences[0].charAt(i);
+    // var i = -1;
+   
+    numOfChar++;
+    var sentChar = sentences[l].charAt(i);
+    console.log(sentences[l].charAt(i));
     console.log(sentChar);
+    console.log(numOfChar);
+    console.log(sentences[l].length);
+    $('#target-letter').text(sentChar);
+    if (sentChar == keyStroke){
+        $('#feedback').html(ok);
+    } else if (numOfChar >= sentences[l].length){
+        l++;
+        
+        $('#yellow-block').css('margin-left', "-15px");
+        $('#sentence').html((sentences[l]));
+        numOfChar = 0;
+        i = -1;
+        console.log('end');
+        return;
+    } else {
+        $('#feedback').html(nope);
+        numberOfMistakes++;
+        console.log(numberOfMistakes);
+    }
 }
 
-// on(keyup, function(){
-//     currentLetter++
-
-// })
-
-var sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
-    'Too ato too nOt enot one totA not anot tOO aNot',
-    'oat itain oat tain nate eate tea anne inant nean',
-    'nate eate tea anne inant nean',
-    'itant eate anot eat nato inate eat anot tain eat',
-    'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-var i = -1;
-var sentLength = sentences.length;
 
 
 //tyler examples

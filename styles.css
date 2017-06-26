@@ -12,9 +12,10 @@
 #yellow-block {
   position: absolute;
   margin-top: 10px;
-  width: 15px;
+  width: 10px;
   height: 15px;
   margin-left: -15px;
+  padding: 0 10px;
   background-color: yellow;
 }
 
