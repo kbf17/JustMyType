@@ -13,6 +13,8 @@ var numOfChar = 0;
 var ok = $('<span />').attr({'class':'glyphicon glyphicon-ok', 'aria-hidden':'true' });
 var nope = $('<span />').attr({'class':'glyphicon glyphicon-remove', 'aria-hidden':'true' });
 var numberOfMistakes = 0;
+var numberOfWords = 60;
+var start = new Date();
 
 $(document).ready(function(){
     //changes between keyboards
@@ -66,18 +68,12 @@ $(document).ready(function(){
 
     //
     $('body').on('keypress', function(){
-        // var i = -1;
         i++;
         travelSentence();
-
     });
-
-    
 });
 
 function travelSentence () {
-    // var i = -1;
-   
     numOfChar++;
     var sentChar = sentences[l].charAt(i);
     console.log(sentences[l].charAt(i));
@@ -87,11 +83,15 @@ function travelSentence () {
     $('#target-letter').text(sentChar);
     if (sentChar == keyStroke){
         $('#feedback').html(ok);
-    } else if (numOfChar >= sentences[l].length){
+    } else if (numOfChar == 50){
+        endGame();
+        console.log(numberOfMistakes);
+    }
+    else if (numOfChar >= sentences[l].length){
         l++;
-        
         $('#yellow-block').css('margin-left', "-15px");
         $('#sentence').html((sentences[l]));
+        $('#feedback').html('');
         numOfChar = 0;
         i = -1;
         console.log('end');
@@ -101,8 +101,25 @@ function travelSentence () {
         numberOfMistakes++;
         console.log(numberOfMistakes);
     }
-}
+};
 
+function wordsPerMinute(){
+    var stop = d.getMinutes();
+    var speed = (numberOfWords / (stop - start) - 2 * numberOfMistakes);
+};
+
+function endGame(){
+    var elapsed = new Date() - start;
+ 
+    console.log(elapsed);
+    var speed = (numberOfWords / elapsed - 2 * numberOfMistakes);
+    var yes = confirm('Your speed is: ' + speed + "\nWould you like to try again?");
+    if (yes == true){
+        location.reload();
+    } else {
+        alert('Kay.');
+    }
+}
 
 
 //tyler examples
