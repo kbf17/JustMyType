@@ -5,11 +5,13 @@ var sentences =
     'oat itain oat tain nate eate tea anne inant nean',
     'itant eate anot eat nato inate eat anot tain eat',
     'nee ene ate ite tent tiet ent ine ene ete ene ate'];
-var i = -1;
+var i = 0;
 var l = 0;
 var c = -1;
+var e = 1;
 var sentLength = sentences[l].length;
 var numOfChar = 0;
+var lastChar = (sentences[l].slice(-1)[0]);
 var ok = $('<span />').attr({'class':'glyphicon glyphicon-ok', 'aria-hidden':'true' });
 var nope = $('<span />').attr({'class':'glyphicon glyphicon-remove', 'aria-hidden':'true' });
 var numberOfMistakes = 0;
@@ -17,6 +19,8 @@ var numberOfWords = 54;
 var start = new Date();
 
 $(document).ready(function(){
+    console.log(sentences.length);
+    console.log(lastChar);
     //changes between keyboards
     $("body").on('keydown', function(key){
         if (key.which == 16){
@@ -52,12 +56,14 @@ $(document).ready(function(){
 
     //display sentences
     $('#sentence').html(splitArray());
+    $('#sentence span').first().addClass('highlight-current');
 
     //the main game
     $('body').on('keypress', function(){
-        i++;
-        c++;
-        moveHighlight();
+        // i++;
+        // c++;
+        // moveHighlight();
+
         travelSentence();
     });
 });
@@ -66,18 +72,28 @@ $(document).ready(function(){
 function travelSentence () {
     numOfChar++;
     var sentChar = sentences[l].charAt(i);
-    $('#target-letter').text(sentChar);
+    var expectChar = sentences[l].charAt(e);
+    console.log(sentChar);
+    console.log(lastChar);
+    $('#target-letter').text(expectChar);
     if (sentChar == keyStroke){
+        i++;
+        e++;
+        c++;
+        moveHighlight();
         $('#feedback').html(ok);
-    } else if (numOfChar == 50){
+    } else if (l == 4 && numOfChar >= sentences[l].length){
         endGame();
     } else if (numOfChar >= sentences[l].length){
         l++;
         $('#feedback').html('');
         $('#sentence').html(splitArray());
+        $('#sentence span').first().addClass('highlight-current');
         numOfChar = 0;
-        i = -1;
+        i = 0;
         c = -1;
+        e = 1;
+        console.log(l);
         return;
     } else {
         $('#feedback').html(nope);
@@ -121,6 +137,6 @@ jQuery.fn.findNext = function(selector) {
 };
 
 function moveHighlight (span){
-    $("span").prev().removeClass('highlight-current');
-    $("span").findNext("span").addClass('highlight-current');  
+    $("#sentence span").prev().removeClass('highlight-current');
+    $("#sentence span").findNext(span).addClass('highlight-current');  
 };
