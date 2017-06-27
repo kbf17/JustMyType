@@ -1,13 +1,11 @@
 var keyStroke;
-var sentences =
-    ['ten ate neite ate nee enet ite ate inet ent eate',
+var sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
     'Too ato too nOt enot one totA not anot tOO aNot',
     'oat itain oat tain nate eate tea anne inant nean',
     'itant eate anot eat nato inate eat anot tain eat',
     'nee ene ate ite tent tiet ent ine ene ete ene ate'];
 var i = -1;
 var l = 0;
-var c = -1;
 var sentLength = sentences[l].length;
 // var sentChar = sentences[l].charAt(i);
 var numOfChar = 0;
@@ -36,7 +34,7 @@ $(document).ready(function(){
     //letter to text input
     $("body").keypress(function(which){
         keyStroke = String.fromCharCode(event.which);
-        // console.log(keyStroke);
+        console.log(keyStroke);
         // var letter = event.charCode;
         // console.log(letter); 
     });
@@ -51,31 +49,26 @@ $(document).ready(function(){
     });
     $('body').on('keyup', function(){
         $('span.key').each(function () {
-            // if ($(this).text() == keyStroke) {
+            if ($(this).text() == keyStroke) {
                 $(this).removeClass('highlight');
-            // }   
+            }   
         })
     });
 
     //display sentences
-    $('#sentence').html(splitArray());
-    // $('#sentence span').first().addClass('highlight');
+    $('#sentence').html((sentences[0].split('')));
 
     //move highlight box
-    // $('body').on('keypress', function(key){
-    //     if (key.which != 16){
-    //         $("span").next().css('background-color', 'yellow');
-    //         return;
-    //     }
-    // });
+    $('body').on('keypress', function(key){
+        if (key.which != 16){
+            $('#yellow-block').css('margin-left', "+=20");
+        }
+    });
 
     //the main game
     $('body').on('keypress', function(){
         i++;
-        c++;
-        moveHighlight();
         travelSentence();
-        console.log(c);
     });
 });
 
@@ -83,6 +76,10 @@ $(document).ready(function(){
 function travelSentence () {
     numOfChar++;
     var sentChar = sentences[l].charAt(i);
+    console.log(sentences[l].charAt(i));
+    console.log(sentChar);
+    console.log(numOfChar);
+    console.log(sentences[l].length);
     $('#target-letter').text(sentChar);
     if (sentChar == keyStroke){
         $('#feedback').html(ok);
@@ -93,11 +90,10 @@ function travelSentence () {
     else if (numOfChar >= sentences[l].length){
         l++;
         $('#yellow-block').css('margin-left', "-15px");
+        $('#sentence').html((sentences[l]).split(''));
         $('#feedback').html('');
-        $('#sentence').html(splitArray());
         numOfChar = 0;
         i = -1;
-        c = -1;
         console.log('end');
         return;
     } else {
@@ -118,31 +114,15 @@ function endGame(){
         location.reload();
     } else {
         alert('Kay.');
-        // $('body').css('background-image', 'url(https://media.giphy.com/media/87y7z2LdEhxCM/giphy.gif)');
     }
-    // if (numberOfMistakes == 0) {
-    //     $('iframe').removeClass('egg');
-    // }
 };
 
-function splitArray(){
-    $("#sentence").html("");
-    var splitSentence = sentences[l].split("");
-    var b = 0, length = sentences[l].length;
-    for (b; b < length; b++) {
-        var newSpan = $('<span />').html(splitSentence[b]);
-        $('#sentence').append(newSpan);
-    } console.log(splitSentence)
-}
 
-// get the next sibling that matches the selector
-// only processes the first item in the passed in jQuery object
-// designed to return a jQuery object containing 0 or 1 DOM elements
-jQuery.fn.findNext = function(selector) {
-    return this.eq(0).nextAll(selector).eq(c);
-}
-
-function moveHighlight (span){
-    $("span").prev().removeClass('highlight-current');
-    $("span").findNext("span").addClass('highlight-current');  
-}
+//tyler examples
+        // $(document).on('keydown', function(key){
+    //     highlight(key.wich)
+    // })
+   //function highlight(code, defaultColor) {
+    //   if (defaultColor) {
+       // $('#' + code).css('background-color', 'pink')
+    //}

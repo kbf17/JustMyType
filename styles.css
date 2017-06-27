@@ -51,6 +51,10 @@
   background-color: yellow;
 }
 
+.highlight-current {
+  background-color: yellow;
+}
+
 .egg {
   display: none;
 }
