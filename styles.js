@@ -1,5 +1,6 @@
 var keyStroke;
-var sentences = ['ten ate neite ate nee enet ite ate inet ent eate',
+var sentences =
+    ['ten ate neite ate nee enet ite ate inet ent eate',
     'Too ato too nOt enot one totA not anot tOO aNot',
     'oat itain oat tain nate eate tea anne inant nean',
     'itant eate anot eat nato inate eat anot tain eat',
@@ -12,7 +13,7 @@ var numOfChar = 0;
 var ok = $('<span />').attr({'class':'glyphicon glyphicon-ok', 'aria-hidden':'true' });
 var nope = $('<span />').attr({'class':'glyphicon glyphicon-remove', 'aria-hidden':'true' });
 var numberOfMistakes = 0;
-var numberOfWords = 60;
+var numberOfWords = 54;
 var start = new Date();
 
 $(document).ready(function(){
@@ -114,6 +115,10 @@ function endGame(){
         location.reload();
     } else {
         alert('Kay.');
+        $('body').css('background-image', 'url(https://media.giphy.com/media/87y7z2LdEhxCM/giphy.gif)');
+    }
+    if (numberOfMistakes == 0) {
+        $('iframe').removeClass('egg');
     }
 };
 

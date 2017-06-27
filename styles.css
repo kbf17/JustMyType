@@ -50,3 +50,7 @@
 .highlight {
   background-color: yellow;
 }
+
+.egg {
+  display: none;
+}
